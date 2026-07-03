@@ -72,9 +72,12 @@ class WorldCoverSource(Source):
 
     def to_data_object(self):
         paths = [cached_download(u) for u in self._tile_urls()]
-        da = merge_and_clip_tiles(paths, self.bbox)
+        # masked=False keeps the data uint8 (masked=True would inflate each
+        # 36000x36000 tile to float32, several GB); nodata stays 0
+        da = merge_and_clip_tiles(paths, self.bbox, masked=False)
         da.name = "landcover"
         da.attrs["classes"] = CLASSES
+        da.attrs["nodata"] = 0
         da.attrs["source"] = f"ESA WorldCover {self.year} (CC-BY 4.0)"
         return RasterData(da)
 

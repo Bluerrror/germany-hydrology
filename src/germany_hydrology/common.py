@@ -103,16 +103,21 @@ class RasterData:
         return f"RasterData{tuple(self._da.sizes.items())}"
 
 
-def merge_and_clip_tiles(paths, bbox):
-    """Open COG tiles with rioxarray, mosaic them and clip to ``bbox`` (lon/lat)."""
+def merge_and_clip_tiles(paths, bbox, masked=True):
+    """Open COG tiles with rioxarray, clip EACH to ``bbox``, then mosaic.
+
+    Clipping before merging keeps memory at window size: a whole WorldCover
+    tile is 36000x36000 px (>5 GB as masked float32); loading tiles fully
+    before clipping kills small machines (e.g. Colab).
+    """
     import rioxarray  # noqa: F401
     import rioxarray.merge
-    import xarray as xr
 
-    tiles = [rioxarray.open_rasterio(p, masked=True).squeeze("band", drop=True)
-             for p in paths]
-    da = tiles[0] if len(tiles) == 1 else rioxarray.merge.merge_arrays(tiles)
-    if bbox is not None:
-        w, s, e, n = bbox
-        da = da.rio.clip_box(minx=w, miny=s, maxx=e, maxy=n)
-    return da
+    tiles = []
+    for p in paths:
+        da = rioxarray.open_rasterio(p, masked=masked)  # lazy, windowed reads
+        if bbox is not None:
+            w, s, e, n = bbox
+            da = da.rio.clip_box(minx=w, miny=s, maxx=e, maxy=n)
+        tiles.append(da.squeeze("band", drop=True).load())
+    return tiles[0] if len(tiles) == 1 else rioxarray.merge.merge_arrays(tiles)

@@ -72,10 +72,18 @@ class DwdGridsSource(Source):
             [xr.open_dataset(p, engine="h5netcdf") for p in paths], dim="time"
         )
         if self.bbox is not None:
+            import numpy as np
+
+            # window by index bounds instead of where(..., drop=True): the
+            # latter materialises the full-Germany array (RAM-hungry on Colab)
             w, s, e, n = self.bbox
             mask = ((ds.lon >= w) & (ds.lon <= e)
-                    & (ds.lat >= s) & (ds.lat <= n))
-            ds = ds.where(mask.compute(), drop=True)
+                    & (ds.lat >= s) & (ds.lat <= n)).compute()
+            ys, xs = np.where(mask.transpose("y", "x").values)
+            if ys.size == 0:
+                raise ValueError(f"bbox {self.bbox} is outside the HYRAS grid.")
+            ds = ds.isel(y=slice(int(ys.min()), int(ys.max()) + 1),
+                         x=slice(int(xs.min()), int(xs.max()) + 1))
         ds.attrs["source"] = "DWD HYRAS (CC-BY 4.0), Quelle: Deutscher Wetterdienst"
         return RasterData(ds)
 
