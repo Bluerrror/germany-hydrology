@@ -10,7 +10,7 @@ are fetched directly so results are never stale.
 import json
 import urllib.request
 
-USER_AGENT = "earthkit-data-hydrology-germany/0.1"
+USER_AGENT = "germany-hydrology/0.1"
 
 
 def cached_download(url):
@@ -85,3 +85,34 @@ class GeoData(TabularData):
 
     def to_xarray(self, **kwargs):
         raise NotImplementedError("Vector data: use to_pandas()/to_geopandas().")
+
+
+class RasterData:
+    """Data object wrapping an xarray DataArray/Dataset (DEM, land cover, grids)."""
+
+    def __init__(self, da):
+        self._da = da
+
+    def to_xarray(self, **kwargs):
+        return self._da
+
+    def to_numpy(self, **kwargs):
+        return self._da.values
+
+    def __repr__(self):
+        return f"RasterData{tuple(self._da.sizes.items())}"
+
+
+def merge_and_clip_tiles(paths, bbox):
+    """Open COG tiles with rioxarray, mosaic them and clip to ``bbox`` (lon/lat)."""
+    import rioxarray  # noqa: F401
+    import rioxarray.merge
+    import xarray as xr
+
+    tiles = [rioxarray.open_rasterio(p, masked=True).squeeze("band", drop=True)
+             for p in paths]
+    da = tiles[0] if len(tiles) == 1 else rioxarray.merge.merge_arrays(tiles)
+    if bbox is not None:
+        w, s, e, n = bbox
+        da = da.rio.clip_box(minx=w, miny=s, maxx=e, maxy=n)
+    return da

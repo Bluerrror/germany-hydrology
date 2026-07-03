@@ -3,8 +3,8 @@ requires = ["setuptools>=64"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "earthkit-data-hydrology-germany"
-version = "0.1.0"
+name = "germany-hydrology"
+version = "0.2.0"
 description = "earthkit-data source plugins for German hydrology: ERA5 time series, DWD climate observations, PEGELONLINE river gauges, HydroSHEDS basins/rivers, BGR soil map"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -25,20 +25,26 @@ dependencies = [
     "pandas>=1.5",
     "geopandas>=0.14",
     "pyproj>=3.3",
+    "rioxarray>=0.13",
+    "h5netcdf>=1.0",
 ]
 
 [project.optional-dependencies]
 test = ["pytest>=7"]
 
 [project.urls]
-Homepage = "https://github.com/Bluerrror/earthkit-data-hydrology-germany"
+Homepage = "https://github.com/Bluerrror/germany-hydrology"
 
 [project.entry-points."earthkit.data.sources"]
-era5-timeseries = "earthkit_data_hydrology_germany.era5:Era5TimeseriesSource"
-dwd-observations = "earthkit_data_hydrology_germany.dwd:DwdObservationsSource"
-pegelonline = "earthkit_data_hydrology_germany.pegelonline:PegelonlineSource"
-hydrosheds = "earthkit_data_hydrology_germany.hydrosheds:HydroshedsSource"
-buek1000 = "earthkit_data_hydrology_germany.buek:Buek1000Source"
+era5-timeseries = "germany_hydrology.era5:Era5TimeseriesSource"
+dwd-observations = "germany_hydrology.dwd:DwdObservationsSource"
+dwd-grids = "germany_hydrology.dwd_grids:DwdGridsSource"
+pegelonline = "germany_hydrology.pegelonline:PegelonlineSource"
+hydrosheds = "germany_hydrology.hydrosheds:HydroshedsSource"
+buek1000 = "germany_hydrology.buek:Buek1000Source"
+copernicus-dem = "germany_hydrology.dem:CopernicusDemSource"
+worldcover = "germany_hydrology.landcover:WorldCoverSource"
+camels-de = "germany_hydrology.camels:CamelsDeSource"
 
 [tool.setuptools.packages.find]
 where = ["src"]

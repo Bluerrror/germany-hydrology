@@ -8,11 +8,11 @@ import zipfile
 import pandas as pd
 import pytest
 
-from earthkit_data_hydrology_germany.buek import Buek1000Source
-from earthkit_data_hydrology_germany.dwd import DwdObservationsSource
-from earthkit_data_hydrology_germany.era5 import Era5TimeseriesSource
-from earthkit_data_hydrology_germany.hydrosheds import GERMANY, HydroshedsSource
-from earthkit_data_hydrology_germany.pegelonline import PegelonlineSource
+from germany_hydrology.buek import Buek1000Source
+from germany_hydrology.dwd import DwdObservationsSource
+from germany_hydrology.era5 import Era5TimeseriesSource
+from germany_hydrology.hydrosheds import GERMANY, HydroshedsSource
+from germany_hydrology.pegelonline import PegelonlineSource
 
 
 # -- era5-timeseries -------------------------------------------------------
