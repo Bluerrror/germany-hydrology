@@ -7,11 +7,6 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](pyproject.toml)
 [![earthkit-data](https://img.shields.io/badge/earthkit--data-%E2%89%A51.0-green.svg)](https://earthkit-data.readthedocs.io/)
 
-**▶ Try the browser app — no install:** [bluerrror.github.io/germany-hydrology](https://bluerrror.github.io/germany-hydrology/)
-(also at [HydrologyDE.bluerror.com](https://HydrologyDE.bluerror.com)). Click a
-CAMELS-DE catchment, explore its climate and gauges, and calibrate the HBV
-rainfall-runoff model live in your browser.
-
 Nine data sources and two analysis toolkits for hydrology in Germany —
 forcing, observations, river gauges, catchments, rivers, terrain, land cover
 and soil — all as [earthkit-data](https://earthkit-data.readthedocs.io/)
