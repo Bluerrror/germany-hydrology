@@ -2,7 +2,7 @@
 
 """earthkit-data source plugins and tools for German hydrology."""
 
-from . import network, signatures
+from . import hbv, network, signatures
 from .buek import Buek1000Source
 from .camels import CamelsDeSource
 from .dem import CopernicusDemSource
@@ -26,6 +26,7 @@ __all__ = [
     "HydroshedsSource",
     "PegelonlineSource",
     "WorldCoverSource",
+    "hbv",
     "network",
     "signatures",
 ]

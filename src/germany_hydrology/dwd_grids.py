@@ -69,7 +69,8 @@ class DwdGridsSource(Source):
 
         paths = [cached_download(u) for u in self._urls()]
         ds = xr.concat(
-            [xr.open_dataset(p, engine="h5netcdf") for p in paths], dim="time"
+            [xr.open_dataset(p, engine="h5netcdf") for p in paths],
+            dim="time", data_vars="minimal", coords="minimal", compat="override",
         )
         if self.bbox is not None:
             import numpy as np

@@ -32,8 +32,30 @@ open-data equivalents.
 
 | module | what it does |
 |--------|--------------|
+| `germany_hydrology.hbv` | full HBV-96 rainfall–runoff model (snow, soil moisture, two-box response, MAXBAS routing), vectorised over parameter sets, with **Optuna calibration**: user-selectable objective (`nse`/`kge`/`log_nse`/callable), calibration & validation periods, bounds and fixed parameters |
 | `germany_hydrology.signatures` | NSE, KGE, PBIAS, flow-duration curve + slope, Lyne–Hollick baseflow + BFI, Richards–Baker flashiness, runoff ratio, half-flow date, high/low-flow frequency |
 | `germany_hydrology.network` | navigate HydroBASINS/HydroRIVERS topology: `upstream()`, `downstream()`, `headwaters()` |
+
+```python
+from germany_hydrology import hbv
+
+result = hbv.calibrate(
+    precip, temp, pet, q_obs,               # daily Series, mm/day & °C
+    objective="nse",                        # or "kge", "log_nse", any callable
+    calibration_period=("1971", "2000"),
+    validation_period=("2001", "2020"),
+    n_trials=300,
+)
+result["best_params"], result["validation_score"], result["simulation"]
+```
+
+On CAMELS-DE gauge DE110000 this reaches **validation NSE 0.80** (1971–2000
+calibration, 2001–2020 test) — see
+[`examples/hbv_calibration.ipynb`](examples/hbv_calibration.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Bluerrror/germany-hydrology/blob/main/examples/hbv_calibration.ipynb),
+which also compares against the published CAMELS-DE HBV/LSTM benchmarks,
+plots Optuna parameter importances, and derives a top-50-trial uncertainty
+band. Optuna is optional: `pip install germany-hydrology[models]`.
 
 ```python
 import earthkit.data as ekd
