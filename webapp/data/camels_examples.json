@@ -1,0 +1,82 @@
+[
+ {
+  "id": "DEF11770",
+  "name": "Hammer",
+  "water": "Eider",
+  "lat": 54.286,
+  "lon": 10.0731,
+  "area_km2": 151.1,
+  "start": "1984-11-01",
+  "n_days": 13210
+ },
+ {
+  "id": "DE912140",
+  "name": "Oberlethe",
+  "water": "Lethe",
+  "lat": 53.0676,
+  "lon": 8.1805,
+  "area_km2": 160.0,
+  "start": "1980-01-01",
+  "n_days": 14976
+ },
+ {
+  "id": "DED11840",
+  "name": "Piskowitz 2",
+  "water": "Ketzerbach",
+  "lat": 51.1955,
+  "lon": 13.3723,
+  "area_km2": 151.0,
+  "start": "1980-01-01",
+  "n_days": 14976
+ },
+ {
+  "id": "DEG10250",
+  "name": "Gr\u00e4finau-Angstedt",
+  "water": "Ilm",
+  "lat": 50.6975,
+  "lon": 11.0183,
+  "area_km2": 154.8,
+  "start": "1980-01-01",
+  "n_days": 14976
+ },
+ {
+  "id": "DE210910",
+  "name": "Mering",
+  "water": "Paar",
+  "lat": 48.2733,
+  "lon": 10.9861,
+  "area_km2": 156.3,
+  "start": "1984-11-01",
+  "n_days": 13210
+ },
+ {
+  "id": "DE110540",
+  "name": "Ohrnberg-Ohrnwiesen",
+  "water": "Ohrn",
+  "lat": 49.2404,
+  "lon": 9.4623,
+  "area_km2": 152.2,
+  "start": "1980-01-01",
+  "n_days": 14976
+ },
+ {
+  "id": "DE811800",
+  "name": "Friedland",
+  "water": "Datze",
+  "lat": 53.669,
+  "lon": 13.5429,
+  "area_km2": 161.4,
+  "start": "1993-11-01",
+  "n_days": 9923
+ },
+ {
+  "id": "DE811350",
+  "name": "Kirch-Baggendorf",
+  "water": "Trebel",
+  "lat": 54.0929,
+  "lon": 12.8994,
+  "area_km2": 179.0,
+  "start": "1980-01-01",
+  "n_days": 14976
+ }
+]
